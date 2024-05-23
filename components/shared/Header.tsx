@@ -1,6 +1,10 @@
+import { SignedOut, SignedIn, UserButton } from "@clerk/nextjs"
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { Button } from "../ui/button";
+import NavItems from "./NavItems";
+import MobileNav from "./MobileNav";
 
 const Header = () => {
   return (
@@ -14,8 +18,23 @@ const Header = () => {
             alt="fight-club-logo"
           ></Image>
         </Link>
+
+        <SignedIn>
+          <nav className="md:flex-between w-full hidden max-w-xs">
+            <NavItems />
+          </nav>
+        </SignedIn>
+
         <div className="flex w-32 justify-end gap-3">
-          {/* TODO: Setup Clerk Auth */}
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+            <MobileNav />
+          </SignedIn>
+          <SignedOut>
+            <Button asChild className="rounded-full" size="lg">
+              <Link href="/sign-in">Login</Link>
+            </Button>
+          </SignedOut>
         </div>
       </div>
     </header>
