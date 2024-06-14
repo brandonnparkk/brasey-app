@@ -1,21 +1,35 @@
-import mongoose from 'mongoose';
+import mongoose, { Mongoose } from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URL = process.env.MONGODB_URL!;
 
-let cached = (global as any).mongoose || { conn: null, promise: null };
+interface MongooseConn {
+  conn: Mongoose | null;
+  promise: Promise<Mongoose> | null;
+}
 
-export const connectToDatabase = async () => {
-  if (cached.conn) {
-    return cached.conn;
-  }
+let cached: MongooseConn = (global as any).mongoose;
 
-  if(!MONGODB_URI) throw new Error('MONGODB_URI is missing!');
+if (!cached) {
+  cached = (global as any).mongoose = {
+    conn: null,
+    promise: null,
+  };
+}
 
-  cached.promise = cached.promise || mongoose.connect(MONGODB_URI, {
-    dbName: 'wedding',
-    bufferCommands: false,
-  });
+export const connect = async () => {
+  if (cached.conn) return cached.conn;
+
+  cached.promise =
+    cached.promise ||
+    mongoose.connect(MONGODB_URL, {
+      dbName: "wedding",
+      bufferCommands: false,
+      connectTimeoutMS: 30000,
+    });
 
   cached.conn = await cached.promise;
+
+  console.log('HELLO WORLD!!! ', cached.conn)
+
   return cached.conn;
 };
