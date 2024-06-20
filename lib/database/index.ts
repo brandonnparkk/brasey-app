@@ -29,7 +29,5 @@ export const connect = async () => {
 
   cached.conn = await cached.promise;
 
-  console.log('HELLO WORLD!!! ', cached.conn)
-
   return cached.conn;
 };

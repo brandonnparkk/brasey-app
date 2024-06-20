@@ -56,9 +56,8 @@ export type DeleteEventParams = {
   path: string
 }
 
-export type GetAllEventsParams = {
+export type GetAllRegistryItemsParams = {
   query: string
-  category: string
   limit: number
   page: number
 }
