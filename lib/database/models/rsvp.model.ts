@@ -1,14 +1,20 @@
 import { Schema, model, models } from "mongoose";
 
-// TODO: add interface for what fields Rsvp has.
+export interface IRsvp extends Document {
+  _id: string;
+  isAttending: string;
+  nameOfAttendees: string;
+  dinnerChoice: string;
+  commentsOrQuestions: string;
+  guest: { _id: string, firstName: string, lastName: string }
+}
 
 const RsvpSchema = new Schema({
-  user: { type: Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
-  rsvpId: { type: String, required: true, unique: true },
-  userId: { type: String, required: true, unique: true},
   isAttending: { type: Boolean, required: true },
-  numOfGuests: { type: Number, required: true },
-  dinnerChoice: { type: Schema.Types.ObjectId, ref: 'DinnerChoice', required: true },
+  nameOfAttendees: { type: String },
+  dinnerChoice: { type: String },
+  commentsOrQuestions: { type: String },
+  guest: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 
 const Rvsp = models.Rsvp || model('Rsvp', RsvpSchema);

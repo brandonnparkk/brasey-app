@@ -15,20 +15,16 @@ export type UpdateUserParams = {
   photo?: string
 }
 
-// ====== EVENT PARAMS
-export type CreateEventParams = {
+type DinnerChoiceType = "Steak" | "Chicken" | "Vegetarian" | "NotPicked";
+
+// ====== RSVP PARAMS
+export type CreateRsvpParams = {
   userId: string
-  event: {
-    title: string
-    description: string
-    location: string
-    imageUrl: string
-    startDateTime: Date
-    endDateTime: Date
-    categoryId: string
-    price: string
-    isFree: boolean
-    url: string
+  rsvpData: {
+    isAttending: boolean
+    namesOfAttendees: string
+    dinnerChoice: DinnerChoiceType,
+    commentsOrQuestions: string
   }
   path: string
 }

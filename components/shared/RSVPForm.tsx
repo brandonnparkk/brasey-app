@@ -17,10 +17,15 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
+import { useRouter } from "next/navigation";
+import { createRsvp } from "@/lib/actions/rsvp.actions";
+import { IRsvp } from "@/lib/database/models/rsvp.model";
 
 interface RSVPFormProps {
   userId: string;
   type: "Create" | "Update";
+  rsvpData?: IRsvp
+  rsvpId?: string;
 }
 
 const DinnerChoiceEnum = {
@@ -32,7 +37,7 @@ const DinnerChoiceEnum = {
 
 type DinnerChoiceType = "Steak" | "Chicken" | "Vegetarian" | "NotPicked";
 
-const RSVPForm = ({ userId, type }: RSVPFormProps) => {
+const RSVPForm = ({ userId, type, rsvpData, rsvpId }: RSVPFormProps) => {
   const initialValues = {
     isAttending: false,
     numberOfAttendees: undefined,
@@ -45,6 +50,8 @@ const RSVPForm = ({ userId, type }: RSVPFormProps) => {
     resolver: zodResolver(rsvpFormSchema),
     defaultValues: initialValues,
   });
+
+  const router = useRouter();
 
   const { control, handleSubmit, watch, reset } = form;
 
@@ -60,10 +67,25 @@ const RSVPForm = ({ userId, type }: RSVPFormProps) => {
     }
   }, [isAttending, reset]);
 
-  function onSubmit(values: z.infer<typeof rsvpFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof rsvpFormSchema>) {
+    if (type === "Create") {
+      try {
+        const newRsvp = await createRsvp({
+          rsvpData: { ...values },
+          userId,
+          path: '/profile'
+        });
+
+        if (newRsvp) {
+          form.reset();
+          router.push(`/rsvp/${newRsvp._id}`)
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    } else if (type === "Update") {
+
+    }
   }
 
   return (
