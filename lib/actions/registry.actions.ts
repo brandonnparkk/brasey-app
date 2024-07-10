@@ -30,7 +30,6 @@ export async function getAllRegistryItems({ query, limit = 6, page }: GetAllRegi
     const skipAmount = (Number(page) - 1) * limit
     const registryItemsQuery = await RegistryItems.find({})
       .sort({ itemName: 'desc' })
-    debugger;
 
     // const registryItems = await populateEvent(registryItemsQuery)
     // const registryItemsCount = await RegistryItems.countDocuments(conditions)

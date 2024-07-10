@@ -16,7 +16,7 @@ export default function Home() {
               online.
             </p>
             <Button size="lg" asChild className="w-full button sm:w-fit">
-              <Link href="#events">Explore Now</Link>
+              <Link href="/rsvp/create">RSVP</Link>
             </Button>
           </div>
           <Image
@@ -26,14 +26,6 @@ export default function Home() {
             width={1000}
             height={1000}
           />
-        </div>
-      </section>
-
-      <section className="wrapper my-8 flex flex-col gap-8 md:gap-12">
-        <h2 id="events" className="h2-bold">Trusted by <br /> Thousands of Game Stores</h2>
-        <div className="flex w-full flex-col gap-5 md:flex-row">
-          Search
-          Category Filter
         </div>
       </section>
     </>

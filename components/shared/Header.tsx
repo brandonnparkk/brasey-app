@@ -9,18 +9,10 @@ import MobileNav from "./MobileNav";
 const Header = () => {
   return (
     <header className="w-full border-b">
+      <div className="w-full flex justify-center">Brasey</div>
       <div className="wrapper flex items-center justify-between">
-        <Link href="/" className="w-36">
-          <Image
-            src="/assets/images/logo.svg"
-            width={128}
-            height={38}
-            alt="fight-club-logo"
-          ></Image>
-        </Link>
-
         <SignedIn>
-          <nav className="md:flex-between w-full hidden max-w-xs">
+          <nav className="md:flex-between w-full justify-center hidden max-w-xs">
             <NavItems />
           </nav>
         </SignedIn>
