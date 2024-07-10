@@ -4,8 +4,6 @@ import { auth } from "@clerk/nextjs/server";
 const CreateRSVP = () => {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
-  debugger;
-  console.log("userid: ", sessionClaims?.userId);
 
   return (
     <>
