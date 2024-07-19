@@ -7,14 +7,14 @@ import { getRsvpByUser } from '@/lib/actions/rsvp.actions';
 
 const Profile = () => {
   const { user, isLoaded } = useUser();
-  const [userData, setUserData] = useState(null);
-  const [rsvpDetails, setRsvpDetails] = useState(null);
+  const [userData, setUserData] = useState(null as any);
+  const [rsvpDetails, setRsvpDetails] = useState(null as any);
 
   useEffect(() => {
     const fetchUserData = async () => {
       if (user?.publicMetadata?.userId) {
         try {
-          const response = await getUserById(user.publicMetadata.userId);
+          const response = await getUserById(user.publicMetadata.userId as any);
           console.log("this is the response: ", response);
           setUserData(response);
         } catch (error) {
