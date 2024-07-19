@@ -14,3 +14,18 @@ export async function createUser(user: any) {
     console.log(error);
   }
 }
+
+export const getUserById = async(userId: string) => {
+  try {
+    await connect();
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error("User not found!");
+    }
+
+    return JSON.parse(JSON.stringify(user));
+  } catch (err) {
+    console.log(err);
+  }
+}

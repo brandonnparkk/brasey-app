@@ -27,6 +27,21 @@ export const createRsvp = async ({ rsvpData, userId, path } : CreateRsvpParams) 
   }
 }
 
+export const getRsvpByUser = async(userId: string) => {
+  try {
+    await connect();
+    const rsvpData = await populateRsvp(Rvsp.findOne({ guest: userId }));
+
+    if (!rsvpData) {
+      throw new Error("Rsvp not found!");
+    }
+
+    return JSON.parse(JSON.stringify(rsvpData));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export const getRsvpById = async(rsvpId: string) => {
   try {
     await connect();
