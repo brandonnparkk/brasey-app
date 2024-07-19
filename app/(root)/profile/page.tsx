@@ -1,5 +1,4 @@
 "use client"
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useUser } from '@clerk/clerk-react';
 
