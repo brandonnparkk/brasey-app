@@ -1,18 +1,35 @@
+"use client"
 import React from 'react'
+import { useEffect } from 'react';
 import { SearchParamProps } from '@/types'
-import { getRsvpById } from '@/lib/actions/rsvp.actions'
+import { useRouter } from 'next/navigation';
+import { useStore } from '@/store/useStore';
 
-const RSVPDetails = async ({ params: {id}}: SearchParamProps) => {
-  const rsvpDetail = await getRsvpById(id);
-  console.log('rsvp detail:', rsvpDetail);
+const RSVPDetails = ({ params: {id}}: SearchParamProps) => {
+  const { rsvpDetails, fetchRsvpDetails } = useStore();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (id) {
+      fetchRsvpDetails(id);
+    }
+  }, [id, fetchRsvpDetails]);
+
+  const handleUpdateBtnClick = () => {
+    router.push(`/rsvp/update/${id}`);
+  };
+
   return (
     <div>
       <h1>RSVP Detail Page</h1>
       <div>
-        <div>Name: {rsvpDetail?.guest?.username}</div>
-        <div>Attending?: {rsvpDetail?.isAttending ? 'YES' : 'NO'}</div>
-        <div>Dinner Choice: {rsvpDetail?.dinnerChoice}</div>
-        <div>Comments / Questions: {rsvpDetail?.commentsOrQuestions}</div>
+        <div>Name: {rsvpDetails?.guest?.username}</div>
+        <div>Attending?: {rsvpDetails?.isAttending ? 'YES' : 'NO'}</div>
+        <div>Dinner Choice: {rsvpDetails?.dinnerChoice}</div>
+        <div>Comments / Questions: {rsvpDetails?.commentsOrQuestions}</div>
+      </div>
+      <div>
+        <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded" onClick={handleUpdateBtnClick}>Update RSVP</button>
       </div>
     </div>
   )

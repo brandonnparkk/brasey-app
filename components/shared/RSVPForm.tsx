@@ -18,7 +18,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
-import { createRsvp } from "@/lib/actions/rsvp.actions";
+import { createRsvp, updateRsvp } from "@/lib/actions/rsvp.actions";
 import { IRsvp } from "@/lib/database/models/rsvp.model";
 
 interface RSVPFormProps {
@@ -84,7 +84,21 @@ const RSVPForm = ({ userId, type, rsvpData, rsvpId }: RSVPFormProps) => {
         console.log(err);
       }
     } else if (type === "Update") {
+      try {
+        const updatedRsvp = await updateRsvp({
+          rsvpContent: { ...values },
+          userId,
+          rsvpId,
+          path: '/profile'
+        })
 
+        if(updatedRsvp) {
+          form.reset();
+          router.push(`/rsvp/${updatedRsvp._id}`)
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 

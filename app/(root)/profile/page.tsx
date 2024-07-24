@@ -1,46 +1,23 @@
 "use client"
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useUser } from '@clerk/clerk-react';
-
-import { getUserById } from '@/lib/actions/user.actions'
-import { getRsvpByUser } from '@/lib/actions/rsvp.actions';
+import { useStore } from '@/store/useStore';
 
 const Profile = () => {
   const { user, isLoaded } = useUser();
-  const [userData, setUserData] = useState(null as any);
-  const [rsvpDetails, setRsvpDetails] = useState(null as any);
+  const { userData, rsvpDetails, fetchUserData, fetchUserRsvpDetails } = useStore();
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      if (user?.publicMetadata?.userId) {
-        try {
-          const response = await getUserById(user.publicMetadata.userId as any);
-          console.log("this is the response: ", response);
-          setUserData(response);
-        } catch (error) {
-          console.error('Failed to fetch user data', error);
-        }
-      }
-    };
-
-    if (isLoaded) {
-      fetchUserData();
+    if (isLoaded && user?.publicMetadata?.userId) {
+      fetchUserData(user.publicMetadata.userId as string);
     }
-  }, [user, isLoaded]);
+  }, [user, isLoaded, fetchUserData]);
 
   useEffect(() => {
-    const fetchUserRsvpDetails = async () => {
-      try {
-        const details = await getRsvpByUser(userData?._id);
-        console.log("this is the details: ", details);
-        setRsvpDetails(details);
-      } catch (err) {
-        console.log("error: ", err);
-      }
+    if (userData?._id) {
+      fetchUserRsvpDetails(userData._id);
     }
-
-    fetchUserRsvpDetails();
-  }, [userData?._id]);
+  }, [userData?._id, fetchUserRsvpDetails]);
 
   if (!isLoaded) {
     return <div>Loading...</div>;
