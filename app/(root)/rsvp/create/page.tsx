@@ -1,4 +1,4 @@
-import RSVPForm from "@/components/shared/RSVPForm"
+// import RSVPForm from "@/components/shared/RSVPForm"
 import { auth } from "@clerk/nextjs/server";
 
 const CreateRSVP = () => {
@@ -11,7 +11,7 @@ const CreateRSVP = () => {
         <h3 className="wrapper h3-bold text-center sm:text-left">RSVP Form</h3>
       </section>
       <div className="wrapper my-8">
-        <RSVPForm userId={userId} type="Create" />
+        {/* <RSVPForm userId={userId} type="Create" /> */}
       </div>
     </>
   )

@@ -12,8 +12,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Fight Club",
-  description: "Find a fighting game event near you",
+  title: "Brasey Wedding Website",
+  description: "Casey and Brandon's Wedding Website",
   icons: {
     icon: "/assets/images/icon.svg",
   },

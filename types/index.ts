@@ -6,6 +6,7 @@ export type CreateUserParams = {
   username: string
   email: string
   photo?: string
+  hasPlusOne: boolean
 }
 
 export type UpdateUserParams = {
@@ -24,7 +25,9 @@ export type CreateRsvpParams = {
     isAttending: boolean
     namesOfAttendees: string
     dinnerChoice: DinnerChoiceType,
-    commentsOrQuestions: string
+    dinnerChoicePlusOne: DinnerChoiceType,
+    commentsOrQuestions: string,
+    commentsOrQuestionsPlusOne: string
   }
   path: string
 }

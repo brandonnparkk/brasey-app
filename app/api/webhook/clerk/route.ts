@@ -51,6 +51,12 @@ export async function POST(req: Request) {
     });
   }
 
+  const url = new URL(req.url);
+  const hasPlusOneParam = url.searchParams.get("plusOne");
+
+  // Convert the query parameter to a boolean
+  const hasPlusOne = hasPlusOneParam === "true";
+
   // Get the ID and type
   const { id } = evt.data;
   const eventType = evt.type;
@@ -67,6 +73,7 @@ export async function POST(req: Request) {
       firstName: first_name!,
       lastName: last_name!,
       photo: image_url,
+      hasPlusOne: hasPlusOne,
     };
 
     console.log(user);
