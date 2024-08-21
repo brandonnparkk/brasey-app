@@ -4,8 +4,11 @@ import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
+// import { useUser } from '@clerk/clerk-react';
 import { Button } from "@/components/ui/button";
 import { rsvpFormSchema } from "@/lib/validator";
+
+import useStore from '@/hooks/useStore'
 import {
   Form,
   FormControl,
@@ -38,12 +41,16 @@ const DinnerChoiceEnum = {
 type DinnerChoiceType = "Steak" | "Chicken" | "Vegetarian" | "NotPicked";
 
 const RSVPForm = ({ userId, type, rsvpData, rsvpId }: RSVPFormProps) => {
+  const currentUser = useStore((state: any) => state.user);
+
   const initialValues = {
     isAttending: false,
     numberOfAttendees: undefined,
     namesOfAttendees: "",
     dinnerChoice: DinnerChoiceEnum.NotPicked as DinnerChoiceType,
+    dinnerChoicePlusOne: DinnerChoiceEnum.NotPicked as DinnerChoiceType,
     commentsOrQuestions: "",
+    commentsOrQuestionsPlusOne: "",
   };
 
   const form = useForm<z.infer<typeof rsvpFormSchema>>({
@@ -62,7 +69,9 @@ const RSVPForm = ({ userId, type, rsvpData, rsvpId }: RSVPFormProps) => {
       reset({
         namesOfAttendees: '',
         dinnerChoice: 'NotPicked',
-        commentsOrQuestions: ''
+        dinnerChoicePlusOne: 'NotPicked',
+        commentsOrQuestions: '',
+        commentsOrQuestionsPlusOne: ''
       });
     }
   }, [isAttending, reset]);
@@ -198,6 +207,75 @@ const RSVPForm = ({ userId, type, rsvpData, rsvpId }: RSVPFormProps) => {
                 )}
               />
             </div>
+            {currentUser?.hasPlusOne && (
+              <>
+              <div className="flex flex-col gap-5 md:flex-row">
+              <FormField
+                control={form.control}
+                name="dinnerChoicePlusOne"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Dinner Choice:</FormLabel>
+                    <FormControl>
+                      <RadioGroup
+                        value={field.value}
+                        onValueChange={field.onChange}
+                        className="flex flex-col space-y-1"
+                      >
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value={DinnerChoiceEnum.Steak} />
+                          </FormControl>
+                          <FormLabel className="font-normal">
+                            {DinnerChoiceEnum.Steak}
+                          </FormLabel>
+                        </FormItem>
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value={DinnerChoiceEnum.Chicken} />
+                          </FormControl>
+                          <FormLabel className="font-normal">
+                            {DinnerChoiceEnum.Chicken}
+                          </FormLabel>
+                        </FormItem>
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem
+                              value={DinnerChoiceEnum.Vegetarian}
+                            />
+                          </FormControl>
+                          <FormLabel className="font-normal">
+                            {DinnerChoiceEnum.Vegetarian}
+                          </FormLabel>
+                        </FormItem>
+                      </RadioGroup>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="flex flex-col gap-5 md:flex-row">
+              <FormField
+                control={form.control}
+                name="commentsOrQuestionsPlusOne"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Comments or Questions:</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Any questions or comments?"
+                        className="resize-none"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            </>
+            )}
           </>
         ) : (
           ""

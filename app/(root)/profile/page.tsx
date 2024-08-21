@@ -66,6 +66,7 @@ const Profile = () => {
           <li>Attending?: {rsvpDetails?.isAttending ? 'YES' : 'NO'}</li>
           <li>Dinner Choice: {rsvpDetails?.dinnerChoice}</li>
           <li>Comments / Questions: {rsvpDetails?.commentsOrQuestions}</li>
+          <li>Has Plus One?: { userData?.hasPlusOne }</li>
         </ul>
       </div>
     </div>

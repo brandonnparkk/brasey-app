@@ -4,11 +4,13 @@ import { revalidatePath } from 'next/cache'
 
 import { connect } from '@/lib/database'
 import User from '@/lib/database/models/user.model'
+import { CreateUserParams } from '@/types'
 
-export async function createUser(user: any) {
+export async function createUser(user: CreateUserParams) {
   try {
     await connect();
     const newUser = await User.create(user);
+    console.log("THIS IS NEW USER:", newUser);
     return JSON.parse(JSON.stringify(newUser));
   } catch (error) {
     console.log(error);

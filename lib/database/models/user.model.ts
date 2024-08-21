@@ -27,6 +27,10 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+  hasPlusOne: {
+    type: Boolean,
+    required: true
+  }
 });
 
 const User = models?.User || model("User", UserSchema);
