@@ -1,36 +1,9 @@
-"use client"
-
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import Link from "next/link";
-import useStore from '@/hooks/useStore'
-import { useUser } from '@clerk/clerk-react';
-import { getUserById } from '@/lib/actions/user.actions'
-
-import { useEffect } from 'react';
 
 export default function Home() {
-  const { user, isLoaded } = useUser();
-  const currentUser = useStore((state: any) => state.user);
-  const updateUser = useStore((state: any) => state.updateUser);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (user) {
-        const response = await getUserById(user.publicMetadata.userId as any);
-        updateUser(response);
-      }
-    };
-
-    if (isLoaded) {
-      fetchUserData();
-    }
-  }, [user, isLoaded, updateUser]);
-
-
   return (
     <>
-      <div>{ currentUser?.username }</div>
       <section className="bg-primary-50 bg-dotted-pattern bg-contain py-5 md:py-10">
         <div className="wrapper grid grid-cols-1 gap-5 2xl:gap-0">
           <div className="flex flex-col justify-end gap-8">
