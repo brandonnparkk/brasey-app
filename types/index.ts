@@ -1,12 +1,16 @@
 // ====== USER PARAMS
+export enum UserRole {
+  Admin = 'admin',
+  Guest = 'guest'
+}
+
 export type CreateUserParams = {
-  clerkId: string
+  email: string
   firstName: string
   lastName: string
-  username: string
-  email: string
-  photo?: string
+  role: UserRole
   hasPlusOne: boolean
+  tableNumber: number
 }
 
 export type UpdateUserParams = {

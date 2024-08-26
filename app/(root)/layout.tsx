@@ -2,7 +2,7 @@ import { cookies } from 'next/headers'
 
 import Footer from "@/components/shared/Footer";
 import Header from "@/components/shared/Header";
-import PasswordPromptDialog from "@/components/shared/PasswordDialog";
+import PasswordPromptDialog from "@/components/shared/PasswordDialog/PasswordDialog";
 
 export default function RootLayout({
   children,
