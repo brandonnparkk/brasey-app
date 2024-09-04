@@ -9,8 +9,8 @@ import MobileNav from "./MobileNav";
 const Header = () => {
   return (
     <header className="w-full border-b">
-      <div className="w-full flex justify-center">Brasey</div>
-      <div className="wrapper flex items-center justify-between">
+      <h1 className="my-4 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 w-full flex justify-center">Welcome to my site</h1>
+      {/* <div className="wrapper flex items-center justify-between">
         <SignedIn>
           <nav className="md:flex-between w-full justify-center hidden max-w-xs">
             <NavItems />
@@ -28,7 +28,7 @@ const Header = () => {
             </Button>
           </SignedOut>
         </div>
-      </div>
+      </div> */}
     </header>
   );
 };
